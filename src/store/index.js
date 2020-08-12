@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     status: '',
+    baseUrl: 'http://106.14.164.125:8082/api/v1/',
     token: localStorage.getItem('token') || '',
     user : {}
   },getters : {
@@ -31,10 +32,23 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    campaignList({ commit}, pageInfo){
+      console.log(pageInfo);
+      return new Promise((resolve, reject) => {
+        commit('auth_request')
+        axios.get(this.state.baseUrl + 'campaign/page/' + pageInfo.page + '?size=' + pageInfo.size + '&status=' + pageInfo.campaignStatus)
+          .then(resp => {
+            resolve(resp)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
     loadDashboard({ commit}){
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios.get('http://106.14.164.125:8082/api/v1/dashboard')
+        axios.get(this.state.baseUrl + 'dashboard')
           .then(resp => {
             resolve(resp)
           })
@@ -47,7 +61,7 @@ export default new Vuex.Store({
       console.log("user", user);
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({url: 'http://106.14.164.125:8082/api/v1/users/login_cpanel', data: user, method: 'POST' })
+        axios({url: this.state.baseUrl + 'users/login_cpanel', data: user, method: 'POST' })
         .then(resp => {
           const token = resp.data.token
           const user = resp.data.user

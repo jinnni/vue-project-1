@@ -1,7 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-// import About from '../views/About.vue';
 import Login from '../components/Login.vue';
 import Secure from '../components/Secure.vue';
 import store from './index.js';
@@ -26,6 +24,11 @@ const routes = [
     meta: { 
       requiresAuth: true
     }
+  },
+  {
+    path: "/campaignTable",
+    name: "CampaignTable",
+    component: () => import( "../views/CampaignTable.vue")
   },
   {
     path: "/about",
