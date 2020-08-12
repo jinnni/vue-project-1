@@ -32,6 +32,18 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    campaignBrand({ commit }, pageInfo){
+      return new Promise((resolve, reject) => {
+        commit('auth_request')
+        axios.get(this.state.baseUrl + 'campaign/page/' + pageInfo.page + '?size=' + pageInfo.size + '&status=' + pageInfo.campaignStatus)
+          .then(resp => {
+            resolve(resp)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
     campaignList({ commit}, pageInfo){
       console.log(pageInfo);
       return new Promise((resolve, reject) => {

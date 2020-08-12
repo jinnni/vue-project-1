@@ -58,8 +58,8 @@
                                         color="grey"
                                     ></v-list-item-avatar>
                                 </v-list-item>
-                                <v-card-actions>
-                                    <v-btn @click="navigateTo(item.type)" text>Redirect</v-btn>
+                                <v-card-actions v-if="item.type != 'none'">
+                                    <v-btn color="primary" @click="navigateTo(item.type)" text>{{item.type}}</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-col>
@@ -88,7 +88,9 @@
                     case 'campaignTable':
                         this.$router.push('/CampaignTable')
                         break;
-                
+                    case 'chart':
+                        this.$router.push('/Chart')
+                        break;
                     default:
                         break;
                 }
@@ -96,23 +98,11 @@
         },
         mounted() {
             this.$store.dispatch('loadDashboard').then(resp =>{
-                this.dashboardResponseList.push({title:'Users', data: resp.data.usersCount, type: 'campaignTable'})
+                this.dashboardResponseList.push({title:'Users', data: resp.data.usersCount, type: 'chart'})
                 this.dashboardResponseList.push({title:'Campaigns', data: resp.data.campaignCount, type: 'campaignTable'})
-                this.dashboardResponseList.push({title:'Products', data: resp.data.productsCount, type: 'campaignTable'})
-                this.dashboardResponseList.push({title:'Survey Questions', data: resp.data.questionCount, type: 'campaignTable'})
-                this.dashboardResponseList.push({title:'UGCs', data: resp.data.ugcCount, type: 'campaignTable'})
-                // this.data.usersCount = resp.data.usersCount;
-                // this.data.articlesCount = resp.data.articlesCount;
-                // this.data.campaignCount = resp.data.campaignCount;
-                // this.data.productsCount = resp.data.productsCount;
-                // this.data.questionCount = resp.data.questionCount;
-                // this.data.ugcCount = resp.data.ugcCount;
-                // this.data.dashboardResponseList.push({title:'Users', data: resp.data.usersCount, type: 'campaignTable'})
-                // this.data.dashboardResponseList.push({title:'Campaigns', data: resp.data.campaignCount, type: 'campaignTable'})
-                // this.data.dashboardResponseList.push({title:'Products', data: resp.data.productsCount, type: 'campaignTable'})
-                // this.data.dashboardResponseList.push({title:'Survey Questions', data: resp.data.questionCount, type: 'campaignTable'})
-                // this.data.dashboardResponseList.push({title:'UGCs', data: resp.data.ugcCount, type: 'campaignTable'})
-                
+                this.dashboardResponseList.push({title:'Products', data: resp.data.productsCount, type: 'none'})
+                this.dashboardResponseList.push({title:'Survey Questions', data: resp.data.questionCount, type: 'none'})
+                this.dashboardResponseList.push({title:'UGCs', data: resp.data.ugcCount, type: 'none'})
             });
             
         }
