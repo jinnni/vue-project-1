@@ -61,9 +61,9 @@ export default {
   },
   methods: {
     login: function () {
-      const username = this.username;
-      const password = this.password;
-      const rememberMe = this.rememberMe;
+      const username = '13162970502';//this.username;
+      const password = 'test1234';//this.password;
+      const rememberMe = 'true';this.rememberMe;
       this.$store.dispatch('login', { username, password, rememberMe })
         .then(() => this.$router.push('/home'))
         .catch(err => console.log(err))
